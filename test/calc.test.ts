@@ -10,3 +10,7 @@ test("Should calculate a run at night time", () => {
     expect(fare).toBe(39)
 })
 
+test("Should calculate a run on Sunday", () => {
+    const fare = calc([{ dist: 10, ds: new Date("2021-03-07T10:00:00") }])
+    expect(fare).toBe(29)
+})
