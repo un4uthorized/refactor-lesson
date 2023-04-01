@@ -21,13 +21,15 @@ test("Should calculate a run on Sunday night", () => {
 })
 
 test("Should not calculate a race with an invalid distance", () => {
-    const fare = calc([{ distance: -10, date: new Date("2021-03-07T22:00:00") }])
-    expect(fare).toBe(-1)
+    expect(() => calc([
+        { distance: -10, date: new Date("2021-03-07T22:00:00") }
+    ])).toThrow("Invalid distance")
 })
 
 test("Should not calculate a race with an invalid date", () => {
-    const fare = calc([{ distance: 10, date: new Date("any") }])
-    expect(fare).toBe(-2)
+    expect(() => calc([
+        { distance: 10, date: new Date("any") }]
+    )).toThrow("Invalid date")
 })
 
 test("Should calculate a race in normal time with minimum value", () => {
