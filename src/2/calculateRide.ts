@@ -1,15 +1,22 @@
-// @ts-nocheck
 // calculate ride
 
-const isOvernight = (date) => {
-    return date.getHours() >= 22 || date.getHours() <= 6;
+const OVERNIGHT_FARE = 3.90;
+const OVERNIGHT_SUNDAY_FARE = 5;
+const SUNDAY_FARE = 2.9;
+const NORMAL_FARE = 2.10;
+const MINIMUM_FARE = 10;
+const OVERNIGHT_START = 22;
+const OVERNIGHT_END = 6;
+
+const isOvernight = (date: Date) => {
+    return date.getHours() >= OVERNIGHT_START || date.getHours() <= OVERNIGHT_END;
 }
 
-const isSunday = (date) => {
+const isSunday = (date: Date) => {
     return date.getDay() === 0;
 }
 
-export function calc(segments) {
+export function calc(segments: { distance: number, date: Date }[]) {
     let fare = 0;
     for (const segment of segments) {
         if (!segment.distance || typeof segment.distance !== "number" || segment.distance < 0) {
@@ -19,20 +26,20 @@ export function calc(segments) {
             return -2;
         }
         if (isOvernight(segment.date) && !isSunday(segment.date)) {
-            fare += segment.distance * 3.90;
+            fare += segment.distance * OVERNIGHT_FARE;
         }
         if (isOvernight(segment.date) && isSunday(segment.date)) {
-            fare += segment.distance * 5;
+            fare += segment.distance * OVERNIGHT_SUNDAY_FARE;
         }
 
         if (!isOvernight(segment.date) && isSunday(segment.date)) {
-            fare += segment.distance * 2.9;
+            fare += segment.distance * SUNDAY_FARE;
         }
 
         if (!isOvernight(segment.date) && !isSunday(segment.date)) {
-            fare += segment.distance * 2.10;
+            fare += segment.distance * NORMAL_FARE;
         }
 
     }
-    return fare < 10 ? 10 : fare;
+    return fare < MINIMUM_FARE ? MINIMUM_FARE : fare;
 }
