@@ -16,13 +16,21 @@ const isSunday = (date: Date) => {
     return date.getDay() === 0;
 }
 
+const isValidDistance = (distance: number) => {
+    return distance > 0 && distance && typeof distance === "number";
+}
+
+const isValidDate = (date: Date) => {
+    return date && date instanceof Date && date.toString() !== "Invalid Date";
+}
+
 export function calc(segments: { distance: number, date: Date }[]) {
     let fare = 0;
     for (const segment of segments) {
-        if (!segment.distance || typeof segment.distance !== "number" || segment.distance < 0) {
+        if (!isValidDistance(segment.distance)) {
             throw new Error("Invalid distance");
         }
-        if (!segment.date || !(segment.date instanceof Date) || segment.date.toString() === "Invalid Date") {
+        if (!isValidDate(segment.date)) {
             throw new Error("Invalid date");
         }
         if (isOvernight(segment.date) && !isSunday(segment.date)) {
