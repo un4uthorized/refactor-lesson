@@ -34,9 +34,5 @@ export function calc(segments) {
         }
 
     }
-    if (fare < 10) {
-        return 10;
-    } else {
-        return fare;
-    }
+    return fare < 10 ? 10 : fare;
 }
