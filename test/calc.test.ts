@@ -24,3 +24,9 @@ test("Should not calculate a race with an invalid distance", () => {
     const fare = calc([{ dist: -10, ds: new Date("2021-03-07T22:00:00") }])
     expect(fare).toBe(-1)
 })
+
+test("Should not calculate a race with an invalid date", () => {
+    const fare = calc([{ dist: 10, ds: new Date("any") }])
+    expect(fare).toBe(-2)
+})
+
