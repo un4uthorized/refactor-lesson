@@ -30,3 +30,7 @@ test("Should not calculate a race with an invalid date", () => {
     expect(fare).toBe(-2)
 })
 
+test("Should calculate a race in normal time with minimum value", () => {
+    const fare = calc([{ dist: 3, ds: new Date("2021-03-10T10:00:00") }])
+    expect(fare).toBe(10)
+})
