@@ -17,7 +17,7 @@ const isSunday = (date: Date) => {
 }
 
 const isValidDistance = (distance: number) => {
-    return distance > 0 && distance && typeof distance === "number";
+    return distance > 0 && distance
 }
 
 const isValidDate = (date: Date) => {
